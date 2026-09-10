@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['18.x', '20.x', '22.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci || npm install
+      - run: npm test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm ci || npm install
+      - run: npm run lint
+      - run: npm run typecheck
+
+  nadesiko:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm install nadesiko3
+      - name: Load the plugin from cnako3
+        run: |
+          cat > /tmp/load.nako3 <<'NAKO'
+          !「./nadesiko3-slmp.mjs」を取り込む。
+          SLMP機種一覧の要素数を表示。
+          NAKO
+          npx cnako3 /tmp/load.nako3

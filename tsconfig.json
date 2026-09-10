@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "nadesiko3-slmp/client": ["./src/client.d.mts"],
+      "nadesiko3-slmp/core": ["./src/core.d.mts"],
+      "nadesiko3-slmp/errors": ["./src/errors.d.mts"]
+    }
+  },
+  "include": ["src/**/*.d.mts", "typecheck/**/*.ts"]
+}

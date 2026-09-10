@@ -1,0 +1,72 @@
+{
+  "name": "nadesiko3-slmp",
+  "version": "0.1.0",
+  "description": "SLMP (MELSEC binary 3E/4E) PLC communication plugin for nadesiko3 / 日本語プログラミング言語なでしこ3から三菱電機シーケンサとSLMP通信するプラグイン",
+  "type": "module",
+  "main": "nadesiko3-slmp.mjs",
+  "exports": {
+    ".": "./nadesiko3-slmp.mjs",
+    "./client": {
+      "types": "./src/client.d.mts",
+      "import": "./src/client.mjs"
+    },
+    "./core": {
+      "types": "./src/core.d.mts",
+      "import": "./src/core.mjs"
+    },
+    "./errors": {
+      "types": "./src/errors.d.mts",
+      "import": "./src/errors.mjs"
+    }
+  },
+  "files": [
+    "nadesiko3-slmp.mjs",
+    "src",
+    "examples",
+    "README.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "lint": "standard nadesiko3-slmp.mjs \"src/*.mjs\" \"test/*.mjs\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "keywords": [
+    "nadesiko3",
+    "nadesiko",
+    "nako3",
+    "slmp",
+    "melsec",
+    "mitsubishi",
+    "plc",
+    "industrial-automation",
+    "iq-r"
+  ],
+  "author": "mokouliszt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mokouliszt/slmp-nadesiko3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mokouliszt/slmp-nadesiko3/issues"
+  },
+  "homepage": "https://github.com/mokouliszt/slmp-nadesiko3#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "nadesiko3": ">=3.6.0"
+  },
+  "peerDependenciesMeta": {
+    "nadesiko3": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "standard": "^17.1.0",
+    "typescript": "^5.9.3"
+  }
+}
