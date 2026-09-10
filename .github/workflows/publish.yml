@@ -38,8 +38,21 @@ jobs:
             exit 1
           fi
 
+      - name: Check whether this version is already on the registry
+        id: check_published
+        run: |
+          PKG_NAME="$(node -p "require('./package.json').name")"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if npm view "$PKG_NAME@$PKG_VERSION" version >/dev/null 2>&1; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::$PKG_NAME@$PKG_VERSION is already published — skipping npm publish (e.g. a Release created after the record for an already-published version)."
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       # No NODE_AUTH_TOKEN here on purpose: npm authenticates via the
       # OIDC token from `id-token: write` (Trusted Publisher on npmjs.com).
       # Setting NODE_AUTH_TOKEN — even to an empty secret — makes npm skip
       # the OIDC exchange and fail. Provenance is attached automatically.
       - run: npm publish
+        if: steps.check_published.outputs.already_published == 'false'
